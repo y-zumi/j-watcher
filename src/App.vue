@@ -50,17 +50,17 @@ export default {
       // "https://api.search.nicovideo.jp/api/v2/live/contents/search?targets=title,description,tags,tagsExact,categoryTags&_sort=-startTime&fields=title,description,channelId,commentCounter,userId,categoryTags,contentId,tags,liveStatus,startTime&q=一般(その他) OR ゲーム&filters[liveStatus][0]=past&filters[channelId][0]=2598430"
       "https://api.search.nicovideo.jp/api/v2/live/contents/search?q=test&_sort=-userId&targets=title&fields=title",
       {
-        method: "GET",
-        mode: "no-cors"
+        method: "GET"
+        // mode: "no-cors"
         // cache: "no-cache",
         // credentials: "include" // include, same-origin, *omit
         // headers: {
-        //   // "Content-Type": "application/json; charset=utf-8"
         //   "Content-Type": "application/x-www-form-urlencoded"
         // }
       }
     )
       .then(response => {
+        console.log(response);
         return response.json();
       })
       .then(json => {
