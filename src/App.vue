@@ -46,9 +46,11 @@ export default {
 
     axios
       .get(
-        "/youtube_api/youtube/v3/search?part=snippet&eventType=live&type=video&channelId=UCj8BadK_leFelzdbEZnKRZg&key="
+        "/youtube_api/youtube/v3/search?part=snippet&eventType=live&type=video&channelId=UCj8BadK_leFelzdbEZnKRZg&key=" +
+          process.env.VUE_APP_YOUTUBE_API_KEY
       )
       .then(response => {
+        console.log(response);
         console.log(response.data);
         return response.data;
       })
