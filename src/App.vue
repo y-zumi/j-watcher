@@ -24,7 +24,8 @@ export default {
       youtube_live_link: "",
       youtube_live: "",
       niconico_live_link: "",
-      niconico_live: ""
+      niconico_live: "",
+      youtube_channel_id: "UCj8BadK_leFelzdbEZnKRZg"
     };
   },
   created() {
@@ -46,7 +47,9 @@ export default {
 
     axios
       .get(
-        "/youtube_api/youtube/v3/search?part=snippet&eventType=live&type=video&channelId=UCj8BadK_leFelzdbEZnKRZg&key=" +
+        "/youtube_api/youtube/v3/search?part=snippet&eventType=live&type=video&channelId=" +
+          this.youtube_channel_id +
+          "&key=" +
           process.env.VUE_APP_YOUTUBE_API_KEY
       )
       .then(response => {
