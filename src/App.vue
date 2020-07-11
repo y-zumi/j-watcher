@@ -48,9 +48,13 @@ export default {
     // niconico
     fetch(
       // "https://api.search.nicovideo.jp/api/v2/live/contents/search?targets=title,description,tags,tagsExact,categoryTags&_sort=-startTime&fields=title,description,channelId,commentCounter,userId,categoryTags,contentId,tags,liveStatus,startTime&q=一般(その他) OR ゲーム&filters[liveStatus][0]=past&filters[channelId][0]=2598430"
-      "https://api.search.nicovideo.jp/api/v2/live/contents/search?q=test&_sort=-userId&targets=title&fields=title",
+      // "https://api.search.nicovideo.jp/api/v2/live/contents/search?q=test&_sort=-userId&targets=title&fields=title",
+      "api/live/contents/search?q=live&_sort=-userId&targets=title&fields=title",
       {
-        method: "GET"
+        method: "GET",
+        headers: {
+          "User-Agent": "j-stream/1.0"
+        }
         // mode: "no-cors"
         // cache: "no-cache",
         // credentials: "include" // include, same-origin, *omit
