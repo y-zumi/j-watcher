@@ -12,6 +12,7 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
+import axios from "axios";
 
 export default {
   name: "App",
@@ -27,54 +28,37 @@ export default {
     };
   },
   created() {
+    axios
+      .get(
+        "niconico_api/v2/live/contents/search?q=test&_sort=-userId&targets=title&fields=title"
+      )
+      .then(response => {
+        console.log(response);
+      });
+
     // fetch(
-    //   // "https://www.googleapis.com/youtube/v3/search?part=snippet&eventType=live&type=video&channelId=UCj8BadK_leFelzdbEZnKRZg&key="
-    //   "https://www.googleapis.com/youtube/v3/search?part=snippet&eventType=live&type=video&channelId=UCJubINhCcFXlsBwnHp0wl_g&key="
+    //   // "https://api.search.nicovideo.jp/api/v2/live/contents/search?targets=title,description,tags,tagsExact,categoryTags&_sort=-startTime&fields=title,description,channelId,commentCounter,userId,categoryTags,contentId,tags,liveStatus,startTime&q=一般(その他) OR ゲーム&filters[liveStatus][0]=past&filters[channelId][0]=2598430"
+    //   // "https://api.search.nicovideo.jp/api/v2/live/contents/search?q=test&_sort=-userId&targets=title&fields=title",
+    //   "api/live/contents/search?q=live&_sort=-userId&targets=title&fields=title",
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "User-Agent": "j-stream/1.0"
+    //     }
+    //   }
     // )
     //   .then(response => {
+    //     console.log(response);
     //     return response.json();
     //   })
     //   .then(json => {
-    //     this.youtube_live_link =
-    //       "https://www.youtube.com/watch?v=" + json.items[0].id.videoId;
-    //     this.youtube_live = JSON.stringify(
-    //       json.items[0].snippet.liveBroadcastContent
-    //     );
+    //     // this.niconico_live_link =
+    //     // "https://live2.nicovideo.jp/watch/" + json.data[0].contentId;
+    //     this.niconico_live = json;
     //   })
     //   .catch(err => {
-    //     this.youtube_live = err;
+    //     this.niconico_live = err;
     //   });
-
-    // niconico
-    fetch(
-      // "https://api.search.nicovideo.jp/api/v2/live/contents/search?targets=title,description,tags,tagsExact,categoryTags&_sort=-startTime&fields=title,description,channelId,commentCounter,userId,categoryTags,contentId,tags,liveStatus,startTime&q=一般(その他) OR ゲーム&filters[liveStatus][0]=past&filters[channelId][0]=2598430"
-      // "https://api.search.nicovideo.jp/api/v2/live/contents/search?q=test&_sort=-userId&targets=title&fields=title",
-      "api/live/contents/search?q=live&_sort=-userId&targets=title&fields=title",
-      {
-        method: "GET",
-        headers: {
-          "User-Agent": "j-stream/1.0"
-        }
-        // mode: "no-cors"
-        // cache: "no-cache",
-        // credentials: "include" // include, same-origin, *omit
-        // headers: {
-        //   "Content-Type": "application/x-www-form-urlencoded"
-        // }
-      }
-    )
-      .then(response => {
-        console.log(response);
-        return response.json();
-      })
-      .then(json => {
-        // this.niconico_live_link =
-        // "https://live2.nicovideo.jp/watch/" + json.data[0].contentId;
-        this.niconico_live = json;
-      })
-      .catch(err => {
-        this.niconico_live = err;
-      });
   }
 };
 </script>
