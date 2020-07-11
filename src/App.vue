@@ -31,7 +31,7 @@ export default {
   created() {
     axios
       .get(
-        "/niconico_api/api/live/contents/search?q=live&_sort=-userId&targets=title&fields=title"
+        "/niconico_api/api/v2/live/contents/search?q=LiVE&_sort=-userId&targets=title&fields=title"
       )
       .then(response => {
         console.log(response.data);
