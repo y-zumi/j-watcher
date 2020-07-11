@@ -25,6 +25,7 @@ export default {
     HelloWorld
   },
   data() {
+    console.log(process.env.VUE_APP_ENV);
     if (process.env.VUE_APP_ENV == "production") {
       return {
         youtube_live_link:
