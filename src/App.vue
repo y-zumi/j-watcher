@@ -30,35 +30,35 @@ export default {
   created() {
     axios
       .get(
-        "niconico_api/v2/live/contents/search?q=test&_sort=-userId&targets=title&fields=title"
+        "/niconico_api/api/live/contents/search?q=live&_sort=-userId&targets=title&fields=title"
       )
       .then(response => {
-        console.log(response);
+        console.log(response.data);
+        return response.data;
+      })
+      .then(json => {
+        this.niconico_live_link =
+          "https://live2.nicovideo.jp/watch/" + json.data[0].contentId;
+      })
+      .catch(err => {
+        this.niconico_live = err;
       });
 
-    // fetch(
-    //   // "https://api.search.nicovideo.jp/api/v2/live/contents/search?targets=title,description,tags,tagsExact,categoryTags&_sort=-startTime&fields=title,description,channelId,commentCounter,userId,categoryTags,contentId,tags,liveStatus,startTime&q=一般(その他) OR ゲーム&filters[liveStatus][0]=past&filters[channelId][0]=2598430"
-    //   // "https://api.search.nicovideo.jp/api/v2/live/contents/search?q=test&_sort=-userId&targets=title&fields=title",
-    //   "api/live/contents/search?q=live&_sort=-userId&targets=title&fields=title",
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "User-Agent": "j-stream/1.0"
-    //     }
-    //   }
-    // )
-    //   .then(response => {
-    //     console.log(response);
-    //     return response.json();
-    //   })
-    //   .then(json => {
-    //     // this.niconico_live_link =
-    //     // "https://live2.nicovideo.jp/watch/" + json.data[0].contentId;
-    //     this.niconico_live = json;
-    //   })
-    //   .catch(err => {
-    //     this.niconico_live = err;
-    //   });
+    axios
+      .get(
+        "/youtube_api/youtube/v3/search?part=snippet&eventType=live&type=video&channelId=UCj8BadK_leFelzdbEZnKRZg&key="
+      )
+      .then(response => {
+        console.log(response.data);
+        return response.data;
+      })
+      .then(json => {
+        this.youtube_live_link =
+          "https://www.youtube.com/watch?v=" + json.items[0].id.videoId;
+      })
+      .catch(err => {
+        this.youtube_live = err;
+      });
   }
 };
 </script>
