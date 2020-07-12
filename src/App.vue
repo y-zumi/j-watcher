@@ -87,7 +87,7 @@ export default {
           "_sort=-startTime&" +
           "fields=title,description,channelId,commentCounter,userId,categoryTags,contentId,tags,liveStatus,startTime&" +
           "q=一般(その他) OR ゲーム&" +
-          "filters[liveStatus][0]=past&" +
+          "filters[liveStatus][0]=onair&" +
           "filters[channelId][0]=2598430"
       )
       .then(response => {
