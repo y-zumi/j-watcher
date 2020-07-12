@@ -45,6 +45,7 @@ export default {
         "https://www.youtube.com/channel/UCx1nAvtVDIsaGmCMSe8ofsQ",
       youtube_live: "none",
       youtube_channel_id: "UCj8BadK_leFelzdbEZnKRZg",
+      niconico_base_url: "https://api.search.nicovideo.jp",
       niconico_live_link: "https://live.nicovideo.jp/",
       niconico_live: "none",
       niconico_channel_id: "",
@@ -75,9 +76,19 @@ export default {
         console.log(err);
       });
 
+    if (process.env.VUE_APP_ENV == "local") {
+      this.niconico_base_url = "/niconico_api";
+    }
     axios
       .get(
-        "https://api.search.nicovideo.jp/api/v2/live/contents/search?q=LiVE&_sort=-userId&targets=title&fields=title"
+        this.niconico_base_url +
+          "/api/v2/live/contents/search?" +
+          "targets=title,description,tags,tagsExact,categoryTags&" +
+          "_sort=-startTime&" +
+          "fields=title,description,channelId,commentCounter,userId,categoryTags,contentId,tags,liveStatus,startTime&" +
+          "q=一般(その他) OR ゲーム&" +
+          "filters[liveStatus][0]=past&" +
+          "filters[channelId][0]=2598430"
       )
       .then(response => {
         console.log(response.data);
@@ -93,7 +104,12 @@ export default {
 
     axios
       .get(
-        "https://www.googleapis.com/youtube/v3/search?part=snippet&eventType=live&type=video&channelId=" +
+        "https://www.googleapis.com/youtube/v3/search?" +
+          "part=snippet&" +
+          "eventType=live&" +
+          "type=video&" +
+          "fields=items(snippet/liveBroadcastContent,id/videoId)&" +
+          "channelId=" +
           this.youtube_channel_id +
           "&key=" +
           process.env.VUE_APP_YOUTUBE_API_KEY
