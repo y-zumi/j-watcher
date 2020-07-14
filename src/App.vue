@@ -11,6 +11,17 @@
     <br />---
     <br />
     <a v-bind:href="twitch_video_link">{{twitch_video_title}}</a>
+    <br />
+    <a v-bind:href="youtube_video_link">{{youtube_video_title}}</a>
+    <br />
+    <iframe
+      src="https://player.twitch.tv/?video=678563626&parent=j-stream-dot-kouzoh-p-y-zumi.an.r.appspot.com"
+      frameborder="0"
+      allowfullscreen="true"
+      scrolling="no"
+      height="378"
+      width="620"
+    ></iframe>
   </div>
 </template>
 
@@ -24,6 +35,8 @@ export default {
     console.log(process.env.VUE_APP_ENV);
     if (process.env.VUE_APP_ENV == "production") {
       return {
+        youtube_video_link: "",
+        youtube_video_title: "",
         youtube_live_link:
           "https://www.youtube.com/channel/UCx1nAvtVDIsaGmCMSe8ofsQ",
         youtube_live: "none",
@@ -39,6 +52,8 @@ export default {
       };
     }
     return {
+      youtube_video_link: "",
+      youtube_video_title: "",
       youtube_live_link:
         "https://www.youtube.com/channel/UCx1nAvtVDIsaGmCMSe8ofsQ",
       youtube_live: "none",
@@ -145,6 +160,32 @@ export default {
       .then(json => {
         this.youtube_live = json.items[0].snippet.liveBroadcastContent;
         this.youtube_live_link =
+          "https://www.youtube.com/watch?v=" + json.items[0].id.videoId;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    axios
+      .get(
+        "https://www.googleapis.com/youtube/v3/search?" +
+          "part=snippet&" +
+          "eventType=completed&" +
+          "type=video&" +
+          "order=date&" +
+          "fields=items(id/videoId,snippet/title)&" +
+          "channelId=" +
+          this.youtube_channel_id +
+          "&key=" +
+          process.env.VUE_APP_YOUTUBE_API_KEY
+      )
+      .then(response => {
+        console.log(response);
+        console.log(response.data);
+        return response.data;
+      })
+      .then(json => {
+        this.youtube_video_title = json.items[0].snippet.title;
+        this.youtube_video_link =
           "https://www.youtube.com/watch?v=" + json.items[0].id.videoId;
       })
       .catch(err => {
