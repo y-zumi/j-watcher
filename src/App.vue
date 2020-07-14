@@ -1,26 +1,25 @@
 <template>
   <div id="app">
-    <a v-bind:href="twitch_live_link">twitch live link</a>
+    <a v-bind:href="twitch_live_link">twitch live</a>
     {{twitch_live}}
     <br />
-    <a v-bind:href="niconico_live_link">niconico live link</a>
+    <a v-bind:href="niconico_live_link">niconico live</a>
     {{niconico_live}}
     <br />
-    <a v-bind:href="youtube_live_link">youtube live link</a>
+    <a v-bind:href="youtube_live_link">youtube live</a>
     {{youtube_live}}
+    <br />---
     <br />
+    <a v-bind:href="twitch_video_link">{{twitch_video_title}}</a>
   </div>
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld.vue";
 import axios from "axios";
 
 export default {
   name: "App",
-  components: {
-    // HelloWorld
-  },
+  components: {},
   data() {
     console.log(process.env.VUE_APP_ENV);
     if (process.env.VUE_APP_ENV == "production") {
@@ -32,6 +31,8 @@ export default {
         niconico_live_link: "https://live.nicovideo.jp/",
         niconico_live: "none",
         niconico_channel_id: "",
+        twitch_video_link: "",
+        twitch_video_title: "",
         twitch_live_link: "https://www.twitch.tv/kato_junichi0817",
         twitch_live: "none",
         twitch_user_id: "545050196"
@@ -46,6 +47,8 @@ export default {
       niconico_live_link: "https://live.nicovideo.jp/",
       niconico_live: "none",
       niconico_channel_id: "",
+      twitch_video_link: "",
+      twitch_video_title: "",
       twitch_live_link: "https://www.twitch.tv/kato_junichi0817",
       twitch_live: "none",
       twitch_user_id: "545050196"
@@ -68,6 +71,29 @@ export default {
       })
       .then(json => {
         this.twitch_live = json.data[0].type;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    axios
+      .get(
+        "https://api.twitch.tv/helix/videos?&user_id=" + this.twitch_user_id,
+        {
+          headers: {
+            Authorization: "Bearer " + process.env.VUE_APP_TWITCH_AUTH_TOKEN,
+            "Client-ID": process.env.VUE_APP_TWITCH_CLIENT_ID
+          }
+        }
+      )
+      .then(response => {
+        console.log(response.data);
+        return response.data;
+      })
+      .then(json => {
+        this.twitch_video_link =
+          "https://www.twitch.tv/videos/" + json.data[0].id;
+        this.twitch_video_title = json.data[0].title;
       })
       .catch(err => {
         console.log(err);
