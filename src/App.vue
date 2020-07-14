@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <!-- <img alt="Vue logo" src="./assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />-->
 
     <a v-bind:href="twitch_live_link">twitch live link</a>
     {{twitch_live}}
@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+// import HelloWorld from "./components/HelloWorld.vue";
 import axios from "axios";
 
 export default {
   name: "App",
   components: {
-    HelloWorld
+    // HelloWorld
   },
   data() {
     console.log(process.env.VUE_APP_ENV);
